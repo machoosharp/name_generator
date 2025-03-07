@@ -80,6 +80,24 @@ def name_generator2( min_length=3, weight=0.7 ):
         name += random.choice( next_char.get( name[idx], string.ascii_lowercase ) )
     return name.title()
 
+
+def name_generator3( min_length=3, weight=0.7 ):
+    '''
+    Converts to list by using tuple to do two actions per iteration.
+    First index adds latest char to the char list, second index builds
+    name string from list of chars. it will do this each iteration so
+    at the end we just have to pull the last index from the list, which
+    will contain the list of chars and the name string, then we just pull
+    the name out of that tuple.
+    '''
+    name = [random.choice(string.ascii_lowercase)]
+    name = [
+        ( name.append(char),''.join(name).title())
+        for idx in range( int((random.randint(1,9) * weight) + min_length) )
+        for char in random.choice( next_char.get( name[idx], string.ascii_lowercase ) )
+    ]
+    return name[-1][1]
+
 if __name__ == '__main__':
-    print( 'Name Generator V2:' )
-    print( name_generator2() )
+    print( 'Name Generator V3:' )
+    print( name_generator3() )
