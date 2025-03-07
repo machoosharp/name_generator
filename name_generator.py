@@ -73,6 +73,13 @@ def name_generator1( min_length=3, weight=0.7 ):
     return name.title()
 
 
+def name_generator2( min_length=3, weight=0.7 ):
+    '''Generates a random var first to remove need for weird -1 index at beginning'''
+    name = random.choice(string.ascii_lowercase)
+    for idx in range( int((random.randint(1,9) * weight) + min_length) ):
+        name += random.choice( next_char.get( name[idx], string.ascii_lowercase ) )
+    return name.title()
+
 if __name__ == '__main__':
-    print( 'Name Generator V1:' )
-    print( name_generator1() )
+    print( 'Name Generator V2:' )
+    print( name_generator2() )
