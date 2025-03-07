@@ -124,6 +124,26 @@ def name_generator5( min_length=3, weight=0.7 ):
         for idx in range(int((random.randint(1,9) * weight) + min_length))
     ][-1][0].title()
 
+
+def name_generator6( min_length=3, weight=0.7 ):
+    '''
+    removes string import and also moves to not use externally defined next_char dictionary
+    since the goal is now to make a 100% self contained method. only thing left to remove is
+    the random import
+    '''
+    return [
+        (
+            ''.join( name ),
+            name.append(
+                {
+                    'a': 'abcdefghijklmnopqrstuvwxyz', 'b': 'aeiloruaeiloruaeiloruaeilo', 'c': 'aehikloruyzaehikloruyzaehi', 'd': 'aeijoruyaeijoruyaeijoruyae', 'e': 'abcdefghijklmnpqrstvwxyzab', 'f': 'aeiloruaeiloruaeiloruaeilo', 'g': 'aehiloruyaehiloruyaehiloru', 'h': 'aeiouyaeiouyaeiouyaeiouyae', 'i': 'abcdefgjklmnopqrstvwzabcde', 'j': 'aeiouaeiouaeiouaeiouaeioua', 'k': 'aeilnoruyaeilnoruyaeilnoru', 'l': 'aeilouaeilouaeilouaeilouae', 'm': 'aeiouyaeiouyaeiouyaeiouyae', 'n': 'aeiouaeiouaeiouaeiouaeioua', 'o': 'abcdefghijklmnopqrstuvwxyz', 'p': 'aehilmnorsuyaehilmnorsuyae', 'q': 'uuuuuuuuuuuuuuuuuuuuuuuuuu', 'r': 'aeiouyaeiouyaeiouyaeiouyae', 's': 'acehiklmnopqrstuwacehiklmn', 't': 'aehioruyaehioruyaehioruyae', 'u': 'abcdefghijklmnoprstvwxyzab', 'v': 'aeiouaeiouaeiouaeiouaeioua', 'w': 'aehioruaehioruaehioruaehio', 'x': 'aeiraeiraeiraeiraeiraeirae', 'y': 'aeiouaeiouaeiouaeiouaeioua', 'z': 'aeiouaeiouaeiouaeiouaeioua',
+                }.get( name[idx], 'abcdefghijklmnopqrstuvwxyz')[random.randint(0,25)]
+            )
+        )
+        for name in [['abcdefghijklmnopqrstuvwxyz'[random.randint(0,25)]]]
+        for idx in range(int((random.randint(1,9) * weight) + min_length))
+    ][-1][0].title()
+
 if __name__ == '__main__':
-    print( 'Name Generator V5:' )
-    print( name_generator5() )
+    print( 'Name Generator V6:' )
+    print( name_generator6() )
