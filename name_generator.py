@@ -223,6 +223,78 @@ def name_generator9( i=0 ):
         in [0]*int( ( [1,2,3,4,5,5,6,7,8,9][int(prng(seed)*10)] * 0.7 ) + 3)
     ][-1][0].title()
 
+
+def name_generator10( i=0 ):
+    '''
+    fixes issue with prng producing what feels like repeating names every 5 names by running the prng a few cycles first before using it.
+    The issue arises from the fact that the first number the prng generates after being seeded is linear up to 175 where it goes back to
+    zero and then repeats. So the first value pulled from the prng will be repeatable, and since we only pull from the prng a handful of
+    times, and we arent running far from the seed, we end up with what looks someone like name generation with a fractal nature. To see
+    this issue, run
+    '''
+    return [
+        (
+            name.append(
+                {
+                    'a': 'abcdefghijklmnopqrstuvwxyz',
+                    'b': 'aeiloruaeiloruaeiloruaeilo',
+                    'c': 'aehikloruyzaehikloruyzaehi',
+                    'd': 'aeijoruyaeijoruyaeijoruyae',
+                    'e': 'abcdefghijklmnpqrstvwxyzab',
+                    'f': 'aeiloruaeiloruaeiloruaeilo',
+                    'g': 'aehiloruyaehiloruyaehiloru',
+                    'h': 'aeiouyaeiouyaeiouyaeiouyae',
+                    'i': 'abcdefgjklmnopqrstvwzabcde',
+                    'j': 'aeiouaeiouaeiouaeiouaeioua',
+                    'k': 'aeilnoruyaeilnoruyaeilnoru',
+                    'l': 'aeilouaeilouaeilouaeilouae',
+                    'm': 'aeiouyaeiouyaeiouyaeiouyae',
+                    'n': 'aeiouaeiouaeiouaeiouaeioua',
+                    'o': 'abcdefghijklmnopqrstuvwxyz',
+                    'p': 'aehilmnorsuyaehilmnorsuyae',
+                    'q': 'uuuuuuuuuuuuuuuuuuuuuuuuuu',
+                    'r': 'aeiouyaeiouyaeiouyaeiouyae',
+                    's': 'acehiklmnopqrstuwacehiklmn',
+                    't': 'aehioruyaehioruyaehioruyae',
+                    'u': 'abcdefghijklmnoprstvwxyzab',
+                    'v': 'aeiouaeiouaeiouaeiouaeioua',
+                    'w': 'aehioruaehioruaehioruaehio',
+                    'x': 'aeiraeiraeiraeiraeiraeirae',
+                    'y': 'aeiouaeiouaeiouaeiouaeioua',
+                    'z': 'aeiouaeiouaeiouaeiouaeioua',
+                }[name[-1]][int(prng(seed)*25)]
+            ),
+            ''.join( name ),
+            seed.extend([(171*seed[0]) % a, (172 * seed[1]) % b, (170 * seed[2]) % c]),
+            seed.pop(0),seed.pop(0),seed.pop(0)
+        )
+        for a in [30269] for b in [30307] for c in [30323]
+        for ix in [divmod((i + 1)*1_000_000_000_000_000, a-1)]
+        for iy in [divmod(ix[0],b-1)]
+        for iz in [divmod(iy[0],c-1)]
+        for seed in [[int(ix[1])+1, int(iy[1])+1, int(iz[1])+1]]
+        for prng in [
+            lambda s: [
+                    (
+                    (
+                        (((171 * s[0]) % a) / a + ((172 * s[1]) % b) / b + ((170 * s[2]) % c) / c) % 1
+                    ),
+                    s.extend([(171 * s[0]) % a, (172 * s[1]) % b, (170 * s[2]) % c]),
+                    s.pop(0),s.pop(0),s.pop(0)
+                    )
+                    for _ in [0] * ((
+                        int(
+                            (((171 * s[0]) % a) / a + ((172 * s[1]) % b) / b + ((170 * s[2]) % c) / c) % 1
+                        ) * 100) + 5
+                    )  # Run between 5 - 105 times
+                ][-1][0]
+            ]
+        for name
+        in [['abcdefghijklmnopqrstuvwxyz'[int(prng(seed)*25)]]]
+        for _
+        in [0]*int( ( [1,2,3,4,5,5,6,7,8,9][int(prng(seed)*10)] * 0.7 ) + 3)
+    ][-1][1].title()
+
 if __name__ == '__main__':
-    print( 'Name Generator V9:' )
-    print( name_generator9() )
+    print( 'Name Generator V10:' )
+    print( name_generator10() )
