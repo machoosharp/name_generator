@@ -112,6 +112,18 @@ def name_generator4( min_length=3, weight=0.7 ):
         ]
     ][-1][0]
 
+
+def name_generator5( min_length=3, weight=0.7 ):
+    '''rearanges list comp to not be nested.'''
+    return [
+        (
+            ''.join( name ),
+            name.append(random.choice(next_char.get( name[idx], string.ascii_letters)))
+        )
+        for name in [[string.ascii_letters[random.randint(0,25)]]]
+        for idx in range(int((random.randint(1,9) * weight) + min_length))
+    ][-1][0].title()
+
 if __name__ == '__main__':
-    print( 'Name Generator V4:' )
-    print( name_generator4() )
+    print( 'Name Generator V5:' )
+    print( name_generator5() )
