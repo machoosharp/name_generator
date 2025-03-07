@@ -144,6 +144,39 @@ def name_generator6( min_length=3, weight=0.7 ):
         for idx in range(int((random.randint(1,9) * weight) + min_length))
     ][-1][0].title()
 
+
+def name_generator7(i=0):
+    '''
+    This iteration uses a Wichmann-Hill type PRNG to remove need for any imported modules
+
+    The WH implementation chosen here is derived from this comment:
+    https://stackoverflow.com/a/23374109/11234513
+
+    My implementation attempted to use this without a class. But this version introduces
+    a bug which can be seen if this is ran given a range of numbers from 0 - 100. The
+    names it generates will often repeat or be extremely similar for every set of 5 names.
+    This is due to the fact that the first value produced from the WH PRNG after seed
+    seems to be a linear value which will go from 0-175 and then repeat. The prng below is
+    updated a handlful of times when the name is being generated, but the starting value is
+    only slightly different from the previous, so names are bound to look similar. This bug
+    wasn't noticed until a few iterations later even though its so obvious, I had only
+    tested it with single randomly chosen numbers.
+    '''
+    return [
+        (''.join( name ),
+        name.append({'a': 'abcdefghijklmnopqrstuvwxyz', 'b': 'aeiloruaeiloruaeiloruaeilo', 'c': 'aehikloruyzaehikloruyzaehi', 'd': 'aeijoruyaeijoruyaeijoruyae', 'e': 'abcdefghijklmnpqrstvwxyzab', 'f': 'aeiloruaeiloruaeiloruaeilo', 'g': 'aehiloruyaehiloruyaehiloru', 'h': 'aeiouyaeiouyaeiouyaeiouyae', 'i': 'abcdefgjklmnopqrstvwzabcde', 'j': 'aeiouaeiouaeiouaeiouaeioua', 'k': 'aeilnoruyaeilnoruyaeilnoru', 'l': 'aeilouaeilouaeilouaeilouae', 'm': 'aeiouyaeiouyaeiouyaeiouyae', 'n': 'aeiouaeiouaeiouaeiouaeioua', 'o': 'abcdefghijklmnopqrstuvwxyz', 'p': 'aehilmnorsuyaehilmnorsuyae', 'q': 'uuuuuuuuuuuuuuuuuuuuuuuuuu', 'r': 'aeiouyaeiouyaeiouyaeiouyae', 's': 'acehiklmnopqrstuwacehiklmn', 't': 'aehioruyaehioruyaehioruyae', 'u': 'abcdefghijklmnoprstvwxyzab', 'v': 'aeiouaeiouaeiouaeiouaeioua', 'w': 'aehioruaehioruaehioruaehio', 'x': 'aeiraeiraeiraeiraeiraeirae', 'y': 'aeiouaeiouaeiouaeiouaeioua', 'z': 'aeiouaeiouaeiouaeiouaeioua',
+                    }.get( name[idx], 'abcdefghijklmnopqrstuvwxyz')[int(((((171*seed[0]) % 30269)/30269.0 + ((172 * seed[1]) % 30307)/30307.0 + ((170 * seed[2]) % 30323)/30323.0)%1)*25)]
+        ),
+        seed.extend([(171*seed[0]) % 30269, (172 * seed[1]) % 30307, (170 * seed[2]) % 30323]),
+        seed.pop(0),seed.pop(0),seed.pop(0) )
+        for seed
+        in [[int( divmod((i + 1)*10_000_000_000_000_000, 30268)[1] ) + 1, int(  divmod( divmod((i + 1)*10_000_000_000_000_000, 30268)[0],30306)[1] ) + 1, int( divmod(divmod(divmod((i + 1)*10_000_000_000_000_000, 30268)[0],30306)[0],30322)[1]) + 1]]
+        for name
+        in [['abcdefghijklmnopqrstuvwxyz'[int(((((171*seed[0]) % 30269)/30269.0 + ((172 * seed[1]) % 30307)/30307.0 + ((170 * seed[2]) % 30323)/30323.0)%1)*25)]]]
+        for idx
+        in range( int( ( [1,2,3,4,5,5,6,7,8,9][int(((((171*seed[0]) % 30269)/30269.0 + ((172 * seed[1]) % 30307)/30307.0 + ((170 * seed[2]) % 30323)/30323.0)%1)*10)] * 0.7 ) + 3))
+    ][-1][0].title()
+
 if __name__ == '__main__':
-    print( 'Name Generator V6:' )
-    print( name_generator6() )
+    print( 'Name Generator V7:' )
+    print( name_generator7() )
