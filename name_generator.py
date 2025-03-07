@@ -98,6 +98,20 @@ def name_generator3( min_length=3, weight=0.7 ):
     ]
     return name[-1][1]
 
+
+def name_generator4( min_length=3, weight=0.7 ):
+    '''
+    Converts to first oneline version by making use of variable definition allowed
+    by list comprehension when you do a for loop on a list of length 1.
+    '''
+    return [
+        e for name in ([random.choice(string.ascii_lowercase)],) for e in [
+            (''.join(name).title(), name.append(char))
+            for idx in range( int((random.randint(1,9) * weight) + min_length) )
+            for char in random.choice( next_char.get( name[idx], string.ascii_lowercase ) )
+        ]
+    ][-1][0]
+
 if __name__ == '__main__':
-    print( 'Name Generator V3:' )
-    print( name_generator3() )
+    print( 'Name Generator V4:' )
+    print( name_generator4() )
