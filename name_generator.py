@@ -295,6 +295,81 @@ def name_generator10( i=0 ):
         in [0]*int( ( [1,2,3,4,5,5,6,7,8,9][int(prng(seed)*10)] * 0.7 ) + 3)
     ][-1][1].title()
 
+
+def name_generator11( i=0 ):
+    '''
+    This version attempts to remove all remaining references to builtins,
+    to try and make this completely algebraic.
+    Changed from lambda function to generator, the generator can act on the seed list so we can remove
+    all the logic updating it in the tuple. now it gets updated 100 times each time we call
+    prng.__next__(), the generator will only run 1000 times but we will never call it that much.
+    Also removed the *1_000_000_000_000_000 that was added when we
+    init the seed, I thought it was needed due to how the divmod works but actually
+    it was causing the random numbers to act really not random, not the pseudorandom numbers
+    actually seem somewhat random compaired to before.
+    '''
+    return [
+        (
+            name.append(
+                {
+                    'a': 'abcdefghijklmnopqrstuvwxyz',
+                    'b': 'aeiloruaeiloruaeiloruaeilo',
+                    'c': 'aehikloruyzaehikloruyzaehi',
+                    'd': 'aeijoruyaeijoruyaeijoruyae',
+                    'e': 'abcdefghijklmnpqrstvwxyzab',
+                    'f': 'aeiloruaeiloruaeiloruaeilo',
+                    'g': 'aehiloruyaehiloruyaehiloru',
+                    'h': 'aeiouyaeiouyaeiouyaeiouyae',
+                    'i': 'abcdefgjklmnopqrstvwzabcde',
+                    'j': 'aeiouaeiouaeiouaeiouaeioua',
+                    'k': 'aeilnoruyaeilnoruyaeilnoru',
+                    'l': 'aeilouaeilouaeilouaeilouae',
+                    'm': 'aeiouyaeiouyaeiouyaeiouyae',
+                    'n': 'aeiouaeiouaeiouaeiouaeioua',
+                    'o': 'abcdefghijklmnopqrstuvwxyz',
+                    'p': 'aehilmnorsuyaehilmnorsuyae',
+                    'q': 'uuuuuuuuuuuuuuuuuuuuuuuuuu',
+                    'r': 'aeiouyaeiouyaeiouyaeiouyae',
+                    's': 'acehiklmnopqrstuwacehiklmn',
+                    't': 'aehioruyaehioruyaehioruyae',
+                    'u': 'abcdefghijklmnoprstvwxyzab',
+                    'v': 'aeiouaeiouaeiouaeiouaeioua',
+                    'w': 'aehioruaehioruaehioruaehio',
+                    'x': 'aeiraeiraeiraeiraeiraeirae',
+                    'y': 'aeiouaeiouaeiouaeiouaeioua',
+                    'z': 'aeiouaeiouaeiouaeiouaeioua',
+                }[name[-1]][(prng.__next__()*25).__int__()]
+            ),
+            ''.join( name )
+        )
+        for a in [30269] for b in [30307] for c in [30323]
+        for ix in [(((i+1))//(a-1),((i+1))%(a-1))]
+        for iy in [(ix[0]//(b-1),ix[0]%(b-1))]
+        for iz in [(iy[0]//(c-1),iy[0]%(c-1))]
+        for seed in [[ix[1].__int__()+1, iy[1].__int__()+1, iz[1].__int__()+1]]
+        for prng in [
+            ([
+                    (
+                    (
+                        (((171 * seed[0]) % a) / a + ((172 * seed[1]) % b) / b + ((170 * seed[2]) % c) / c) % 1
+                    ),
+                    seed.extend([(171 * seed[0]) % a, (172 * seed[1]) % b, (170 * seed[2]) % c]),
+                    seed.pop(0),seed.pop(0),seed.pop(0)
+                    )
+                    for _ in [0] * ((
+                        (
+                            (((171 * seed[0]) % a) / a + ((172 * seed[1]) % b) / b + ((170 * seed[2]) % c) / c) % 1
+                        ).__int__() * 100) + 5
+                    )
+                ][-1][0]
+            for _ in [0]*1000)]
+        for name
+        in [['abcdefghijklmnopqrstuvwxyz'[(prng.__next__()*25).__int__()]]]
+        for _
+        in [0]*( ( [0,1,2,3,4,5,6,7,8,9][(prng.__next__()*10).__int__()] * 0.7 ) + 3).__int__()
+    ][-1][1].title()
+
+
 if __name__ == '__main__':
-    print( 'Name Generator V10:' )
-    print( name_generator10() )
+    print( 'Name Generator V11:' )
+    print( name_generator11() )
