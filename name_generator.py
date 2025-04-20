@@ -13,6 +13,7 @@ which version it is, and the docstring will describe the changes made in that ve
 '''
 import random
 import string
+import timeit
 
 
 # Original next char dict.
@@ -373,7 +374,45 @@ def name_generator11( i=0 ):
 # One line lambda of version 11
 n=lambda i=0:[(n.append({'a':'abcdefghijklmnopqrstuvwxyz','b':'aeiloruaeiloruaeiloruaeilo','c':'aehikloruyzaehikloruyzaehi','d':'aeijoruyaeijoruyaeijoruyae','e':'abcdefghijklmnpqrstvwxyzab','f':'aeiloruaeiloruaeiloruaeilo','g':'aehiloruyaehiloruyaehiloru','h':'aeiouyaeiouyaeiouyaeiouyae','i':'abcdefgjklmnopqrstvwzabcde','j':'aeiouaeiouaeiouaeiouaeioua','k':'aeilnoruyaeilnoruyaeilnoru','l':'aeilouaeilouaeilouaeilouae','m':'aeiouyaeiouyaeiouyaeiouyae','n':'aeiouaeiouaeiouaeiouaeioua','o':'abcdefghijklmnopqrstuvwxyz','p':'aehilmnorsuyaehilmnorsuyae','q':'uuuuuuuuuuuuuuuuuuuuuuuuuu','r':'aeiouyaeiouyaeiouyaeiouyae','s':'acehiklmnopqrstuwacehiklmn','t':'aehioruyaehioruyaehioruyae','u':'abcdefghijklmnoprstvwxyzab','v':'aeiouaeiouaeiouaeiouaeioua','w':'aehioruaehioruaehioruaehio','x':'aeiraeiraeiraeiraeiraeirae','y':'aeiouaeiouaeiouaeiouaeioua','z':'aeiouaeiouaeiouaeiouaeioua',}[n[-1]][(r.__next__()*25).__int__()]),''.join(n))for a in[30269]for b in[30307]for c in[30323]for x in[(((i+1))//(a-1),((i+1))%(a-1))]for y in[(x[0]//(b-1),x[0]%(b-1))]for z in[(y[0]//(c-1),y[0]%(c-1))]for s in[[x[1].__int__()+1,y[1].__int__()+1,z[1].__int__()+1]]for r in[([(((((171*s[0])%a)/a+((172*s[1])%b)/b+((170*s[2])%c)/c)%1),s.extend([(171*s[0])%a,(172*s[1])%b,(170*s[2])%c]),s.pop(0),s.pop(0),s.pop(0))for _ in[0]*((((((171*s[0])%a)/a+((172*s[1])%b)/b+((170*s[2])%c)/c)%1).__int__()*100)+5)][-1][0]for _ in[0]*1000)]for n in[['abcdefghijklmnopqrstuvwxyz'[(r.__next__()*25).__int__()]]]for _ in[0]*(([0,1,2,3,4,5,6,7,8,9][(r.__next__()*10).__int__()]*0.7)+3).__int__()][-1][1].title()
 
+r = random.Random()
+nc = {
+    'a': 'abcdefghijklmnopqrstuvwxyz',
+    'b': 'aeiloru',
+    'c': 'aehikloruyz',
+    'd': 'aeijoruy',
+    'e': 'abcdefghijklmnpqrstvwxyz',
+    'f': 'aeiloru',
+    'g': 'aehiloruy',
+    'h': 'aeiouy',
+    'i': 'abcdefgjklmnopqrstvwz',
+    'j': 'aeiou',
+    'k': 'aeilnoruy',
+    'l': 'aeilou',
+    'm': 'aeiouy',
+    'n': 'aeiou',
+    'o': 'abcdefghijklmnopqrstuvwxyz',
+    'p': 'aehilmnorsuy',
+    'q': 'u',
+    'r': 'aeiouy',
+    's': 'acehiklmnopqrstuw',
+    't': 'aehioruy',
+    'u': 'abdefghjklmnprst',
+    'v': 'aeio',
+    'w': 'aehioru',
+    'x': 'aei',
+    'y': 'aeiou',
+    'z': 'aeiou',
+}
+def name_generator12( i=0 ):
+    '''
+    This version goes the complete opposite direction and uses random import again.
+    '''
+    r.seed(i)
+    return ''.join([ (name, name.append( r.choice( nc[name[-1]] ) ))
+        for name in [[r.choice('abcdefghijklmnopqrstuvwxyz')]]
+        for _ in range(int((r.randint(0,9)*0.7)+3))
+    ][-1][0]).title()
 
 if __name__ == '__main__':
-    print( 'Name Generator V11:' )
-    print( name_generator11() )
+    print( 'Name Generator V12:' )
+    print( name_generator12() )
